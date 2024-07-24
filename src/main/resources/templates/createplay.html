@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CreatePlaylist</title>
+</head>
+<body>
+<h1>Create Playlist</h1>
+
+<form th:action="@{/createplay}" th:method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="songs">Select Songs:</label>
+    <select id="songs" name="songs" multiple>
+        <option th:each="song : ${songs}" th:value="${song.id}" th:text="${song.name}"></option>
+    </select>
+    <button type="submit" id="submit">Submit</button>
+</form>
+
+</body>
+</html>

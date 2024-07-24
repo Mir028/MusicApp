@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+</head>
+<body>
+<div>
+    <h3 th:text="${playlist.name}"></h3>
+    <h4>Songs in this Playlist:</h4>
+    <ul>
+        <li th:each="song : ${songs}">
+            <span th:text="${song.name}">Song Name</span> -
+            <span th:text="${song.artist}">Artist</span> -
+            <span th:text="${song.duration}">Duration</span>
+        </li>
+    </ul>
+</div>
+
+
+</body>
+</html>

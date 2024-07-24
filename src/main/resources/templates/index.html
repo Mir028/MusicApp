@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Songs</title>
+</head>
+<body>
+<h3>Songs</h3>
+
+<div th:each="song : ${songs}">
+    <h1 th:text="${song.name}"></h1>
+    <h3 th:text="${song.artist}"></h3>
+    <h3 th:text="${song.duration}"></h3>
+    <form th:method="POST" th:action="@{'/songs/{id}/delete' (id = ${song.id})}">
+        <button type="submit">Delete</button>
+    </form>
+</div>
+
+<a th:href="@{create}">Create</a>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PlayList</title>
+</head>
+<body>
+<h1>Play list</h1>
+<div th:each="play : ${playlist}">
+    <h1 th:text="${play.name}"></h1>
+    <a th:href="@{'/playlist/{id}' (id=${play.id})}">Details</a>
+    <form th:method="POST" th:action="@{'/songs/{id}/delete' (id = ${play.id})}">
+        <button type="submit">Delete</button>
+    </form>
+
+</div>
+<a th:href="@{createplay}">Create</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CreateSong</title>
+</head>
+<body>
+<h1>Create song</h1>
+
+<form th:action='@{/create}' th:method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="artist">Artist:</label>
+    <input type="text" id="artist" name="artist" required>
+    <label for="duration">Duration:</label>
+    <input type="text" id="duration" name="duration" required>
+    <button type="submit" id="submit">Submit</button>
+</form>
+
+<a href="index.html">Back to the list</a>
+
+</body>
+</html>
