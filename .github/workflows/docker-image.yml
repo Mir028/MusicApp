@@ -27,7 +27,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: your-dockerhub-username/music_app:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/music_app:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -42,8 +42,17 @@ jobs:
         with:
           version: v1.19.7
 
+      - name: Create .kube directory
+        run: mkdir -p $HOME/.kube
+
       - name: Set up Kubeconfig
         run: echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+
+      - name: Apply ConfigMap
+        run:  kubectl apply -f k8s/app-configmap.yml
+
+      - name: Apply Secret
+        run: kubectl apply -f k8s/app-secret.yml
 
       - name: Deploy to Kubernetes
         run: |
