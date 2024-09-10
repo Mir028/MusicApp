@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+data:
+  application.properties: |
+    spring.datasource.url= jdbc:postgresql://postgres-service:5432/musicapp
+    spring.datasource.username= music
+    spring.datasource.password= m123
