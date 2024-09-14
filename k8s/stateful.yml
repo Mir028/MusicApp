@@ -1,38 +1,48 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: music-app
+  name: postgres-config
+  namespace: namespace-music-app
+data:
+  postgres.conf: |
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: namespace-music-app
+type: Opaque
+data:
+  POSTGRES_USER: bXl1c2Vy
+  POSTGRES_PASSWORD: bXlwYXNzd29yZA==
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
   namespace: namespace-music-app
 spec:
-  replicas: 4
+  ports:
+    - port: 5432
+      targetPort: 5432
   selector:
-    matchLabels:
-      app: music-app
-  template:
-    metadata:
-      labels:
-        app: music-app
-    spec:
-      containers:
-        - name: music-app
-          image: miro028/music_app:latest
-          ports:
-            - containerPort: 8080
-          envFrom:
-            - configMapRef:
-                name: app-configmap
-            - secretRef:
-                name: app-secret
+    app: postgres
+  clusterIP: None
 
 ---
 
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: postgres-deployment
+  name: postgres
   namespace: namespace-music-app
 spec:
-  replicas: 1
+  serviceName: "postgres-service"
+  replicas: 2
   selector:
     matchLabels:
       app: postgres
@@ -60,20 +70,5 @@ spec:
         - name: postgres-storage
           persistentVolumeClaim:
             claimName: postgres-pvc
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-  namespace: namespace-music-app
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-
 
 
